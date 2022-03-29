@@ -3,7 +3,7 @@ import sqlite3
 from sqlite3 import Error
 from datetime import datetime
 
-DB_NAME = "translator.db"
+DB_NAME = "dictionary.db"
 
 app = Flask(__name__)
 app.secret_key = "@*#(!HbJ@#LKJyl,!@#*aSDd**)sHdgsC^ExA&^*@#L!@#uiyoy:EWzA)R(_IAO:SD<?xiVqH{}#@$)_#(@)_IqI!"
