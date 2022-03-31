@@ -6,4 +6,12 @@
 
 {% block main %}
 
+{% for category in category_list %}
+
+<div class="category-box">
+    <h3>{{ category[1] }}</h3>
+</div>
+
+{% endfor %}
+
 {% endblock %}

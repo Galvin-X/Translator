@@ -22,7 +22,16 @@ def create_connection(db_file):
 
 @app.route('/')
 def render_homepage():
-    return render_template('home.html')
+    con = create_connection(DB_NAME)
+
+    query = "SELECT id, name, description FROM category"
+
+    cur = con.cursor()
+    cur.execute(query)
+    found_categories = cur.fetchall()
+    con.close()
+
+    return render_template('home.html', category_list=found_categories)
 
 
 app.run(host='0.0.0.0', debug=True)
