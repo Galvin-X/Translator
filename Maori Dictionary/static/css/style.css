@@ -13,7 +13,7 @@
 
 header {
     grid-area: header;
-    background-color: #f00;
+    background-color: #000;
     padding: 1rem;
 }
 
@@ -27,11 +27,22 @@ main {
     background-color: #edd;
 }
 
-h1, h2, h3, h4 {
-    padding: 1rem 0;
-    font-family: 'Suez One', serif;
-    color: #000;
-    text-shadow: 2px 2px 4px #fff;
+h1 {
+    padding: 0.5rem 0;
+    font-family: Comfortaa, sans-serif;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+h2, h3 {
+    padding: 0.5rem 0;
+    font-family: Comfortaa, sans-serif;
+    color: #fff;
+}
+
+h4 {
+    padding: 0rem 0;
+    font-family: Comfortaa, sans-serif;
 }
 
 p {
@@ -39,7 +50,8 @@ p {
 }
 
 a {
-    color: #222;
+  color: white;
+    text-decoration: none;
 }
 
 img {
@@ -67,7 +79,7 @@ img {
 }
 
 .error {
-    color: #f00;
+    color: #000;
 }
 
 .login {
@@ -98,23 +110,20 @@ img .thumb {
 footer {
     grid-area: footer;
     padding: 1rem;
-    background-color: #f00;
+    background-color: #000;
 }
 
 footer p {
-    color: #000;
-    text-shadow: 2px 2px 4px #fff;
-    font-size: 1.5rem;
+    color: #fff;
+    font-size: 1rem;
 }
 
 footer img {
     float: right;
 }
 
-.category-box {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 2px dashed #fff;
+.category-description {
+    font-style: italic;
 }
 
 @media only screen and (max-width: 768px) {
@@ -266,7 +275,7 @@ footer img {
     }
 
     nav {
-        background: linear-gradient(180deg, rgba(255,0,0,1) 0%, rgba(0, 0, 0, 1) 50%,  rgba(255,0,0,1) 100%);
+        background: #000;
         padding: 0.5rem;
     }
 
@@ -276,21 +285,25 @@ footer img {
     nav li {
         padding: 0.2rem 0;
     }
+    /* unvisited link */
     nav a {
-        color: #fff;
+        color: #777777;
         text-decoration: none;
     }
 
+    /* mouse over link */
     nav a:hover {
         color: #000;
+        text-decoration: none;
         background-color: #fff;
     }
+
     nav input, nav span {
         visibility: hidden;
     }
 
     main {
-        background-image: url('/poutama.jpg');
+        background-color: #000;
     }
     .formRow {
         display: grid;

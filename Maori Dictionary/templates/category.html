@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Maōri Dictionary | {{ passed_cat[0][1] }}{% endblock %}
+
+{% block heading %}Maōri - English Dictionary{% endblock %}
+
+{% block main %}
+
+<h1>{{ passed_cat[0][1] }}</h1>
+
+<div class="category-description">
+    <h2>{{ passed_cat[0][2] }}</h2>
+</div>
+
+{% for word in word_list %}
+
+<div class="category-box">
+    <h4><a href="/word/{{ word[0][0] }}">• {{ word[0][1] }}</a></h4>
+</div>
+
+{% endfor %}
+
+{% endblock %}

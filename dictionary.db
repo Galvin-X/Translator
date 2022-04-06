@@ -1,68 +1,0 @@
-SQLite format 3   @     %                                                             % .K�
-
-{ 
-��L��
-�
-�
-{
-{##�stabl�
-�stablewordwordCREATE TABLE "word"
-(
-	id INTEGER
-		constraint word_pk
-			primary key autoincrement
-		constraint word_word_tag_word_id_fk
-			references word_tag (word_id),
-	name VARCHAR(80),
-	description VARCHAR(600),
-	author_id INTEGER,
-	timestamp DATETIME
-)�{�ItablecategorycategoryCREATE TABLE "category"
-(
-	id INTEGER
-		constraint category_pk
-			primary key autoincrement
-		constraint category_word_tag_category_id_fk
-			references word_tag (category_id),
-	name VARCHAR(80),
-	description VARCHAR(600)
-)�>�_tableuseruserCREATE TABLE "user"
-(
-	id INTEGER
-		constraint user_pk
-			primary key autoincrement
-		constraint user_word_author_fk
-			references word (author),
-	username VARCHAR(32)
-)   B �
-     �A
-�etablewordwordCREATE TABLE "word"
-(
-	id INTEGER
-		constraint word_pk
-			primary key autoincrement,
-	name VARCHAR(80),
-	description VARCHAR(600),
-	author_id INTEGER,
-	timestamp DATETIME
-)� �tableword_tagword_tagCREATE TABLE word_tag
-(
-	id INTEGER
-		constraint word_tag_pk
-			primary key autoincrement,
-	word_id INTEGER,
-	category_id INTEGER
-)P++Ytablesqlite_sequencesqlite_sequenceCREATE TABLE sqlite_sequence(name,seq)    ��6++�#tabl�(�#tablecategorycategoryCREATE TABLE "category"
-(
-	id INTEGER
-		constraint category_pk
-			primary key autoincrement,
-	name VARCHAR(80),
-	description VARCHAR(600)
-)
-    
-� � ����                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             �   categoryword
-	categoryuser
-    
-   � ���                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       # -+rami loves boobsasdadsasdasdasd ra,imkiarasdasd boorbasdasd
-    
