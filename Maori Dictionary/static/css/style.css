@@ -1,8 +1,10 @@
 * {
-    font-family: Comfortaa, sans-serif;
+    font-family: "Microsoft Tai Le", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    background-color: #000;
 }
 
 #container {
@@ -29,20 +31,20 @@ main {
 
 h1 {
     padding: 0.5rem 0;
-    font-family: Comfortaa, sans-serif;
+    /*font-family: Comfortaa, sans-serif;*/
     color: #fff;
     text-transform: uppercase;
 }
 
 h2, h3 {
     padding: 0.5rem 0;
-    font-family: Comfortaa, sans-serif;
+    /*font-family: Comfortaa, sans-serif;*/
     color: #fff;
 }
 
 h4 {
     padding: 0rem 0;
-    font-family: Comfortaa, sans-serif;
+    /*font-family: Comfortaa, sans-serif;*/
 }
 
 p {
@@ -125,6 +127,68 @@ footer img {
 .category-description {
     font-style: italic;
 }
+
+.category-description h2 {
+    padding: 0rem 0;
+    color: #fff;
+}
+
+.category-description h3 {
+    padding: 0.5rem 0;
+    color: #fff;
+}
+
+.category-description h4{
+    font-style: normal;
+    color: #fff;
+}
+
+.category-description a {
+    color: #777777;
+    font-style: italic;
+    text-decoration: none;
+}
+
+/* mouse over link */
+.category-description a:hover {
+    color: #000;
+    text-decoration: none;
+    background-color: #fff;
+}
+
+.category-box {
+    font-style: normal;
+}
+
+.category-box a {
+    color: #777777;
+    text-decoration: none;
+}
+
+/* mouse over link */
+.category-box a:hover {
+    color: #000;
+    text-decoration: none;
+    background-color: #fff;
+}
+
+.footer {
+    font-style: italic;
+    color: #777777;
+}
+
+.footer a {
+    color: #777777;
+    text-decoration: none;
+}
+
+/* mouse over link */
+.footer a:hover {
+    color: #000;
+    text-decoration: none;
+    background-color: #fff;
+}
+
 
 @media only screen and (max-width: 768px) {
     nav

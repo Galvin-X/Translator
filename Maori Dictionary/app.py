@@ -37,9 +37,22 @@ def find_categories():
 
 @app.route('/')
 def render_homepage():
-    # print(sqlite3.version)
-
     return render_template('home.html', category_list=find_categories())
+
+
+@app.route('/about')
+def render_about_page():
+    return render_template('about.html', category_list=find_categories())
+
+
+@app.route('/contributions')
+def render_contributions_page():
+    return render_template('contributions.html', category_list=find_categories())
+
+
+@app.route('/login')
+def render_login_page():
+    return render_template('login.html', category_list=find_categories())
 
 
 @app.route('/category/<cat>')
@@ -73,7 +86,23 @@ def render_category_page(cat):
     con.close()
 
     return render_template('category.html', word_list=words_data, passed_cat=category_data,
-                           category_list=find_categories(), )
+                           category_list=find_categories(), from_category=cat)
+
+
+@app.route('/word/<word>')
+def render_word_page(word):
+    con = create_connection(DB_NAME)
+
+    # Grab category data at the passed category
+    query = """SELECT id, name, description FROM word WHERE id = ?"""
+    cur = con.cursor()
+    cur.execute(query, (word,))
+    word_data = cur.fetchall()
+
+    con.close()
+
+    return render_template('word.html', passed_word=word_data,
+                           category_list=find_categories())
 
 
 app.run(host='0.0.0.0', debug=True)
