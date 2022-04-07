@@ -1345,45 +1345,53 @@
       <Position>2</Position>
       <DataType>varchar(32)|0s</DataType>
     </column>
-    <key id="491" parent="166" name="user_pk">
+    <column id="491" parent="166" name="email">
+      <Position>3</Position>
+      <DataType>varchar(128)|0s</DataType>
+    </column>
+    <column id="492" parent="166" name="password">
+      <Position>4</Position>
+      <DataType>varchar(80)|0s</DataType>
+    </column>
+    <key id="493" parent="166" name="user_pk">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="492" parent="167" name="id">
+    <column id="494" parent="167" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="493" parent="167" name="name">
+    <column id="495" parent="167" name="name">
       <Position>2</Position>
       <DataType>varchar(80)|0s</DataType>
     </column>
-    <column id="494" parent="167" name="description">
+    <column id="496" parent="167" name="description">
       <Position>3</Position>
       <DataType>varchar(600)|0s</DataType>
     </column>
-    <column id="495" parent="167" name="author">
+    <column id="497" parent="167" name="author">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <column id="496" parent="167" name="timestamp">
+    <column id="498" parent="167" name="timestamp">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <key id="497" parent="167" name="word_pk">
+    <key id="499" parent="167" name="word_pk">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="498" parent="167" name="word_word_tag_word_id_fk">
+    <foreign-key id="500" parent="167" name="word_word_tag_word_id_fk">
       <ColNames>id</ColNames>
       <RefTableName>word_tag</RefTableName>
       <RefColNames>word_id</RefColNames>
     </foreign-key>
-    <column id="499" parent="168" name="word_id">
+    <column id="501" parent="168" name="word_id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <column id="500" parent="168" name="category_id">
+    <column id="502" parent="168" name="category_id">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
     </column>

@@ -21,7 +21,11 @@
                 <h4><a href="\">• Home</a></h4>
                 <h4><a href="\about">• About</a></h4>
                 <h4><a href="\contributions">• Contributions</a></h4>
-                <h4><a href="\login">• Log in</a></h4>
+                {% if not logged_in %}<h4><a href="\login">• Log in</a></h4>
+                {% else %}
+                    <h4><a href="\account">• Account</a></h4>
+                    <h4><a href="\logout">• Log out</a></h4>
+                {% endif %}
                 <h3>Categories <a href="/">+</a> </h3>
             </div>
 

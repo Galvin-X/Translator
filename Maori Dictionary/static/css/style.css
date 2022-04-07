@@ -59,25 +59,78 @@ a {
 img {
     width: 100%;
 }
+
 .dataForm {
     margin: 1rem 0;
-    border: 1px solid #999;
     padding: 1rem;
-    background-color: #fcc;
-    border-radius: 10px;
+    background-color: #000;
+    color: #fff;
 }
 
 .dataForm input, textarea {
     width: 100%;
-    border-radius: 10px;
     padding: 0.3rem;
     margin-bottom: 10px;
+    background-color: #000;
+    color: #fff;
 }
 
 .dataForm p input {
     display: inline;
     width: 1rem;
     margin-left: 0.5rem;
+    background-color: #000;
+    color: #fff;
+}
+
+.formLabel {
+    width: 30%;
+    float: left;
+    padding: 0.3rem;
+    background-color: #000;
+    color: #fff;
+}
+
+.formElement {
+    width: 70%;
+    float: left;
+
+    background-color: #000;
+    color: #fff;
+}
+
+.buttonGroup {
+    margin-top: 3rem;
+    text-align: center;
+
+    background-color: #000;
+    color: #777;
+
+    font-style: italic;
+}
+
+.buttonGroup input {
+    padding: 0.3rem;
+}
+
+.buttonGroup a {
+    color: #777777;
+    text-decoration: none;
+    font-style: normal;
+}
+
+/* mouse over link */
+.buttonGroup a:hover {
+    color: #000;
+    text-decoration: none;
+    background-color: #fff;
+    font-style: normal;
+}
+
+
+.formGroup input {
+    padding: 0.3rem;
+    width: 100%;
 }
 
 .error {
