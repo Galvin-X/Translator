@@ -60,6 +60,10 @@ img {
     width: 100%;
 }
 
+textarea {
+    resize: none;
+}
+
 .dataForm {
     margin: 1rem 0;
     padding: 1rem;
@@ -133,6 +137,16 @@ img {
     width: 100%;
 }
 
+select {
+    width: 70%;
+    float: left;
+
+    margin: 1rem 0;
+    padding: 4px;
+    background-color: #000;
+    color: #fff;
+
+}
 .error {
     color: #000;
 }

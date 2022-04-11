@@ -106,7 +106,7 @@ def account():
     if not is_logged_in():
         return redirect('/?error=Not+logged+in')
 
-    return render_template('home.html', category_list=find_categories(), logged_in=is_logged_in())
+    return render_template('account.html', category_list=find_categories(), logged_in=is_logged_in())
 
 
 @app.route('/logout')
@@ -195,7 +195,7 @@ def render_category_page(cat):
                            category_list=find_categories(), from_category=cat, logged_in=is_logged_in())
 
 
-@app.route('/word/<word>')
+@app.route('/word/<word>', methods=['GET', 'POST'])
 def render_word_page(word):
     con = create_connection(DB_NAME)
 
@@ -209,6 +209,51 @@ def render_word_page(word):
 
     return render_template('word.html', passed_word=word_data,
                            category_list=find_categories(), logged_in=is_logged_in())
+
+
+@app.route('/add_word', methods=['GET', 'POST'])
+def render_add_word_page():
+    if not is_logged_in():
+        return redirect('/?error=Not+logged+in')
+
+    if request.method == "POST":
+        word_name = request.form['word_name'].strip()
+        word_desc = request.form['word_desc'].strip()
+        cat_id = request.form['category'].strip()
+
+        userid = session['userid']
+        timestamp = datetime.now()
+
+        print(f"User {userid} would like to add {word_name} to {cat_id} at {timestamp}")
+
+        con = create_connection(DB_NAME)
+
+        # FIND IF WORD ALREADY EXISTS
+        query = """SELECT name FROM word"""
+        cur = con.cursor()
+        cur.execute(query)
+
+        con.commit()
+
+        word_data = cur.fetchall()
+
+        for find_word in word_data:
+            if find_word[0].strip().lower() == word_name.strip().lower():
+                return redirect('/?error=Word+already+exists+in+database')
+
+        query = "INSERT INTO word(id,name,description,author,timestamp) VALUES (NULL,?,?,?,?)"
+        cur = con.cursor()
+
+        # Catch insertion errors
+        cur.execute(query, (word_name, word_desc, userid, timestamp))
+
+        con.commit()
+
+        #NEED TO DO ADDING WORD TAG
+
+        return redirect('/')
+
+    return render_template('add_word.html', category_list=find_categories(), logged_in=is_logged_in())
 
 
 app.run(host='0.0.0.0', debug=True)
