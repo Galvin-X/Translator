@@ -236,6 +236,7 @@ def render_add_word_page():
         con.commit()
 
         word_data = cur.fetchall()
+        w_id = len(word_data)+1
 
         for find_word in word_data:
             if find_word[0].strip().lower() == word_name.strip().lower():
@@ -249,7 +250,14 @@ def render_add_word_page():
 
         con.commit()
 
-        #NEED TO DO ADDING WORD TAG
+        # Add word to word tag
+        query = """INSERT INTO word_tag(word_id, category_id) VALUES (?,?)"""
+        cur = con.cursor()
+
+        cur.execute(query, (w_id, cat_id))
+
+        con.commit()
+        con.close()
 
         return redirect('/')
 
