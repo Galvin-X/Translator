@@ -37,28 +37,53 @@ def find_categories():
     return found_categories
 
 
-def is_logged_in():
-    if session.get("email") is None:
-        print("Not logged in")
+def fetch_user_data(user):
+    con = create_connection(DB_NAME)
+
+    # Grab category data at the passed category
+    query = """SELECT id, username, teacher FROM user WHERE id = ?"""
+    cur = con.cursor()
+    cur.execute(query, (user,))
+    fetched_user = cur.fetchall()
+
+    try:
+        return fetched_user[0]
+    except ValueError:
+        return False
+
+
+def my_account():
+    if session.get('userid') is None:
         return False
     else:
-        print("Logged in")
+        return session.get('userid')
+
+
+def is_logged_in():
+    if session.get('email') is None:
+        print('Not logged in')
+        return False
+    else:
+        print('Logged in')
         return True
 
 
 @app.route('/')
 def render_homepage():
-    return render_template('home.html', category_list=find_categories(), logged_in=is_logged_in())
+    return render_template('home.html', category_list=find_categories(), logged_in=is_logged_in(),
+                           user_account=my_account())
 
 
 @app.route('/about')
 def render_about_page():
-    return render_template('about.html', category_list=find_categories(), logged_in=is_logged_in())
+    return render_template('about.html', category_list=find_categories(), logged_in=is_logged_in(),
+                           user_account=my_account())
 
 
 @app.route('/contributions')
 def render_contributions_page():
-    return render_template('contributions.html', category_list=find_categories(), logged_in=is_logged_in())
+    return render_template('contributions.html', category_list=find_categories(), logged_in=is_logged_in(),
+                           user_account=my_account())
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -66,7 +91,7 @@ def render_login_page():
     if is_logged_in():
         return redirect('/?error=Already+logged+in')
 
-    if request.method == "POST":
+    if request.method == 'POST':
         email = request.form['email'].strip().lower()
         password = request.form['pass1'].strip()
 
@@ -98,15 +123,16 @@ def render_login_page():
         print(session)
         return redirect('/')
 
-    return render_template('login.html', category_list=find_categories(), logged_in=is_logged_in())
+    return render_template('login.html', category_list=find_categories(), logged_in=is_logged_in(),
+                           user_account=my_account())
 
 
-@app.route('/account')
-def account():
-    if not is_logged_in():
-        return redirect('/?error=Not+logged+in')
+@app.route('/account/<user>')
+def account(user):
+    current_user = fetch_user_data(user)
 
-    return render_template('account.html', category_list=find_categories(), logged_in=is_logged_in())
+    return render_template('account.html', category_list=find_categories(), logged_in=is_logged_in(),
+                           user_account=my_account(), user_data=current_user)
 
 
 @app.route('/logout')
@@ -158,7 +184,8 @@ def render_signup_page():
 
         return redirect('login')
 
-    return render_template('signup.html', category_list=find_categories(), logged_in=is_logged_in())
+    return render_template('signup.html', category_list=find_categories(), logged_in=is_logged_in(),
+                           user_account=my_account())
 
 
 @app.route('/category/<cat>')
@@ -192,7 +219,8 @@ def render_category_page(cat):
     con.close()
 
     return render_template('category.html', word_list=words_data, passed_cat=category_data,
-                           category_list=find_categories(), from_category=cat, logged_in=is_logged_in())
+                           category_list=find_categories(), from_category=cat, logged_in=is_logged_in(),
+                           user_account=my_account())
 
 
 @app.route('/word/<word>', methods=['GET', 'POST'])
@@ -208,7 +236,7 @@ def render_word_page(word):
     con.close()
 
     return render_template('word.html', passed_word=word_data,
-                           category_list=find_categories(), logged_in=is_logged_in())
+                           category_list=find_categories(), logged_in=is_logged_in(), user_account=my_account())
 
 
 @app.route('/add_word', methods=['GET', 'POST'])
@@ -261,7 +289,8 @@ def render_add_word_page():
 
         return redirect('/')
 
-    return render_template('add_word.html', category_list=find_categories(), logged_in=is_logged_in())
+    return render_template('add_word.html', category_list=find_categories(), logged_in=is_logged_in(),
+                           user_account=my_account())
 
 
 app.run(host='0.0.0.0', debug=True)
