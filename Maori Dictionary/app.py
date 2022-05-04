@@ -46,9 +46,9 @@ def fetch_user_data(user):
     cur.execute(query, (user,))
     fetched_user = cur.fetchall()
 
-    try:
+    if len(fetched_user) > 0:
         return fetched_user[0]
-    except ValueError:
+    else:
         return False
 
 
@@ -130,6 +130,8 @@ def render_login_page():
 @app.route('/account/<user>')
 def account(user):
     current_user = fetch_user_data(user)
+    if current_user is False:
+        return redirect('/?error=Account+unavailable')
 
     return render_template('account.html', category_list=find_categories(), logged_in=is_logged_in(),
                            user_account=my_account(), user_data=current_user)
