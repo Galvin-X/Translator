@@ -1381,15 +1381,19 @@
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <key id="500" parent="167" name="word_pk">
+    <column id="500" parent="167" name="maori">
+      <Position>6</Position>
+      <DataType>varchar(128)|0s</DataType>
+    </column>
+    <key id="501" parent="167" name="word_pk">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="501" parent="168" name="word_id">
+    <column id="502" parent="168" name="word_id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <column id="502" parent="168" name="category_id">
+    <column id="503" parent="168" name="category_id">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
     </column>

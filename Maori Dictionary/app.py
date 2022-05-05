@@ -230,7 +230,7 @@ def render_word_page(word):
     con = create_connection(DB_NAME)
 
     # Grab category data at the passed category
-    query = """SELECT id, name, description FROM word WHERE id = ?"""
+    query = """SELECT id, name, maori, description FROM word WHERE id = ?"""
     cur = con.cursor()
     cur.execute(query, (word,))
     word_data = cur.fetchall()
@@ -266,7 +266,7 @@ def render_add_word_page():
         con.commit()
 
         word_data = cur.fetchall()
-        w_id = len(word_data)+1
+        w_id = len(word_data) + 1
 
         for find_word in word_data:
             if find_word[0].strip().lower() == word_name.strip().lower():
