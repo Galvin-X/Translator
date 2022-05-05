@@ -7,9 +7,14 @@
 {% block main %}
 
 <div class="category-description">
-    <h2>{{ passed_word[0][2] }} - {{ passed_word[0][1] }}</h2>
+    <h2>{{ passed_word[0][5] }} - {{ passed_word[0][1] }}</h2>
+    <h3>{{ passed_word[0][2] }}</h3>
 
-    <h3>{{ passed_word[0][3] }}</h3>
+    <h3>Level: {{ passed_word[0][7] }}</h3>
+    <h3>Date Added: {{ passed_word[0][4] }}</h3>
+
+
+    <img src="/static/images/{{ passed_word[0][6] }}">
 
 </div>
 

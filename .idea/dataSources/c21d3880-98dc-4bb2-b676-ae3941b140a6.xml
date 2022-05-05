@@ -1385,15 +1385,23 @@
       <Position>6</Position>
       <DataType>varchar(128)|0s</DataType>
     </column>
-    <key id="501" parent="167" name="word_pk">
+    <column id="501" parent="167" name="image">
+      <Position>7</Position>
+      <DataType>varchar|0s</DataType>
+    </column>
+    <column id="502" parent="167" name="level">
+      <Position>8</Position>
+      <DataType>integer|0s</DataType>
+    </column>
+    <key id="503" parent="167" name="word_pk">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="502" parent="168" name="word_id">
+    <column id="504" parent="168" name="word_id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <column id="503" parent="168" name="category_id">
+    <column id="505" parent="168" name="category_id">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
     </column>

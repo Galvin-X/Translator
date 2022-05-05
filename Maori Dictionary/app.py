@@ -230,7 +230,7 @@ def render_word_page(word):
     con = create_connection(DB_NAME)
 
     # Grab category data at the passed category
-    query = """SELECT id, name, maori, description FROM word WHERE id = ?"""
+    query = """SELECT * FROM word WHERE id = ?"""
     cur = con.cursor()
     cur.execute(query, (word,))
     word_data = cur.fetchall()
@@ -248,8 +248,11 @@ def render_add_word_page():
 
     if request.method == "POST":
         word_name = request.form['word_name'].strip()
+        word_maori = request.form['word_maori'].strip()
         word_desc = request.form['word_desc'].strip()
         cat_id = request.form['category'].strip()
+
+        word_level = max(0, min(10, int(request.form['word_level'])))
 
         userid = session['userid']
         timestamp = datetime.now()
@@ -272,11 +275,11 @@ def render_add_word_page():
             if find_word[0].strip().lower() == word_name.strip().lower():
                 return redirect('/?error=Word+already+exists+in+database')
 
-        query = "INSERT INTO word(id,name,description,author,timestamp) VALUES (NULL,?,?,?,?)"
+        query = "INSERT INTO word(id,name,description,author,timestamp,maori,level) VALUES (NULL,?,?,?,?,?,?)"
         cur = con.cursor()
 
         # Catch insertion errors
-        cur.execute(query, (word_name, word_desc, userid, timestamp))
+        cur.execute(query, (word_name, word_desc, userid, timestamp, word_maori, word_level))
 
         con.commit()
 
