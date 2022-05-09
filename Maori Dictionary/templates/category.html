@@ -13,8 +13,6 @@
 
     {% if word_list|length > 0 %}
         <h4>Below are a list of words in this category: </h4>
-    {% else %}
-        <h4>There are no words in this category! <a href="/add_word">Add one?</a></h4>
     {% endif %}
 </div>
 
@@ -25,5 +23,12 @@
 </div>
 
 {% endfor %}
+
+{% if teacher %}
+    <div class="category-description">
+    <br>
+    <h4><a href="/add_word">Add a word?</a></h4>
+    </div>
+{% endif %}
 
 {% endblock %}

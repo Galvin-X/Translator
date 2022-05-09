@@ -1305,103 +1305,107 @@
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <key id="481" parent="163" name="category_pk">
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="482" parent="164" name="type">
-      <Position>1</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="483" parent="164" name="name">
-      <Position>2</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="484" parent="164" name="tbl_name">
-      <Position>3</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="485" parent="164" name="rootpage">
-      <Position>4</Position>
-      <DataType>int|0s</DataType>
-    </column>
-    <column id="486" parent="164" name="sql">
-      <Position>5</Position>
-      <DataType>text|0s</DataType>
-    </column>
-    <column id="487" parent="165" name="name">
-      <Position>1</Position>
-    </column>
-    <column id="488" parent="165" name="seq">
-      <Position>2</Position>
-    </column>
-    <column id="489" parent="166" name="id">
-      <Position>1</Position>
-      <DataType>integer|0s</DataType>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="490" parent="166" name="username">
-      <Position>2</Position>
-      <DataType>varchar(32)|0s</DataType>
-    </column>
-    <column id="491" parent="166" name="password">
-      <Position>3</Position>
-      <DataType>varchar(80)|0s</DataType>
-    </column>
-    <column id="492" parent="166" name="email">
-      <Position>4</Position>
-      <DataType>varchar(128)|0s</DataType>
-    </column>
-    <column id="493" parent="166" name="teacher">
+    <column id="481" parent="163" name="user_created">
       <Position>5</Position>
       <DataType>boolean|0s</DataType>
     </column>
-    <key id="494" parent="166" name="user_pk">
+    <key id="482" parent="163" name="category_pk">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="495" parent="167" name="id">
+    <column id="483" parent="164" name="type">
+      <Position>1</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="484" parent="164" name="name">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="485" parent="164" name="tbl_name">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="486" parent="164" name="rootpage">
+      <Position>4</Position>
+      <DataType>int|0s</DataType>
+    </column>
+    <column id="487" parent="164" name="sql">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="488" parent="165" name="name">
+      <Position>1</Position>
+    </column>
+    <column id="489" parent="165" name="seq">
+      <Position>2</Position>
+    </column>
+    <column id="490" parent="166" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="496" parent="167" name="name">
+    <column id="491" parent="166" name="username">
       <Position>2</Position>
+      <DataType>varchar(32)|0s</DataType>
+    </column>
+    <column id="492" parent="166" name="password">
+      <Position>3</Position>
       <DataType>varchar(80)|0s</DataType>
     </column>
-    <column id="497" parent="167" name="description">
-      <Position>3</Position>
-      <DataType>varchar(600)|0s</DataType>
-    </column>
-    <column id="498" parent="167" name="author">
+    <column id="493" parent="166" name="email">
       <Position>4</Position>
-      <DataType>integer|0s</DataType>
-    </column>
-    <column id="499" parent="167" name="timestamp">
-      <Position>5</Position>
-      <DataType>datetime|0s</DataType>
-    </column>
-    <column id="500" parent="167" name="maori">
-      <Position>6</Position>
       <DataType>varchar(128)|0s</DataType>
     </column>
-    <column id="501" parent="167" name="image">
-      <Position>7</Position>
-      <DataType>varchar|0s</DataType>
+    <column id="494" parent="166" name="teacher">
+      <Position>5</Position>
+      <DataType>boolean|0s</DataType>
     </column>
-    <column id="502" parent="167" name="level">
-      <Position>8</Position>
-      <DataType>integer|0s</DataType>
-    </column>
-    <key id="503" parent="167" name="word_pk">
+    <key id="495" parent="166" name="user_pk">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="504" parent="168" name="word_id">
+    <column id="496" parent="167" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="497" parent="167" name="name">
+      <Position>2</Position>
+      <DataType>varchar(80)|0s</DataType>
+    </column>
+    <column id="498" parent="167" name="description">
+      <Position>3</Position>
+      <DataType>varchar(600)|0s</DataType>
+    </column>
+    <column id="499" parent="167" name="author">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+    </column>
+    <column id="500" parent="167" name="timestamp">
+      <Position>5</Position>
+      <DataType>datetime|0s</DataType>
+    </column>
+    <column id="501" parent="167" name="maori">
+      <Position>6</Position>
+      <DataType>varchar(128)|0s</DataType>
+    </column>
+    <column id="502" parent="167" name="image">
+      <Position>7</Position>
+      <DataType>varchar|0s</DataType>
+    </column>
+    <column id="503" parent="167" name="level">
+      <Position>8</Position>
+      <DataType>integer|0s</DataType>
+    </column>
+    <key id="504" parent="167" name="word_pk">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="505" parent="168" name="word_id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
     </column>
-    <column id="505" parent="168" name="category_id">
+    <column id="506" parent="168" name="category_id">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
     </column>
