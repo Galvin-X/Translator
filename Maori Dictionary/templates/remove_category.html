@@ -7,13 +7,20 @@
 {% block main %}
 
 <div class="category-description">
-    <h2>{{ passed_cat[0][1] }}
-
-    {% if passed_cat[0][4] and logged_in and teacher %}
-        <a href="/remove_category/{{ passed_cat[0][0] }}"> - Delete this category?</a></h2>
-    {% endif %}
-
+    <h2>{{ passed_cat[0][1] }}</h2>
     <h3>{{ passed_cat[0][2] }}</h3>
+
+
+    {% if logged_in and teacher %}
+    <div class="category-description">
+    <br>
+
+    <h4>Remove this category? - <a href="/confirm_remove_category/{{ passed_cat[0][0] }}">Yes</a> or
+        <a href="/category/{{ passed_cat[0][0] }}">No</a></h4>
+
+    <br>
+    </div>
+    {% endif %}
 
     {% if word_list|length > 0 %}
         <h4>Below are a list of words in this category: </h4>
@@ -27,12 +34,5 @@
 </div>
 
 {% endfor %}
-
-{% if teacher %}
-    <div class="category-description">
-    <br>
-    <h4><a href="/add_word">Add a word?</a></h4>
-    </div>
-{% endif %}
 
 {% endblock %}

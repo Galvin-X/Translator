@@ -91,8 +91,18 @@ def render_about_page():
 
 @app.route('/contributions')
 def render_contributions_page():
+    con = create_connection(DB_NAME)
+    query = "SELECT * FROM word ORDER BY timestamp DESC LIMIT 10"
+
+    cur = con.cursor()
+    cur.execute(query)
+
+    queried_words = cur.fetchall()
+
+    print(queried_words)
+
     return render_template('contributions.html', category_list=find_categories(), logged_in=is_logged_in(),
-                           user_account=my_account(), teacher=is_teacher())
+                           user_account=my_account(), teacher=is_teacher(), contribution_list=queried_words)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -207,7 +217,7 @@ def render_category_page(cat):
     con = create_connection(DB_NAME)
 
     # Grab category data at the passed category
-    query = """SELECT id, name, description FROM category WHERE id = ?"""
+    query = """SELECT id, name, description, timestamp, user_created FROM category WHERE id = ?"""
     cur = con.cursor()
     cur.execute(query, (cat,))
     category_data = cur.fetchall()
@@ -242,15 +252,22 @@ def render_word_page(word):
     con = create_connection(DB_NAME)
 
     # Grab category data at the passed category
-    query = """SELECT * FROM word WHERE id = ?"""
+    query = "SELECT * FROM word WHERE id=?"
     cur = con.cursor()
     cur.execute(query, (word,))
     word_data = cur.fetchall()
 
+    user_id = word_data[0][3]
+
+    query = "SELECT * FROM user WHERE id=?"
+    cur = con.cursor()
+    cur.execute(query, (user_id, ))
+    users = cur.fetchall()
+
     con.close()
 
     return render_template('word.html', passed_word=word_data, category_list=find_categories(),
-                           logged_in=is_logged_in(), user_account=my_account(), teacher=is_teacher())
+                           logged_in=is_logged_in(), user_account=my_account(), teacher=is_teacher(), user_data=users)
 
 
 @app.route('/remove_word/<word>')
@@ -294,7 +311,59 @@ def render_category_remove_page(cat):
     query = "SELECT user_created FROM category WHERE id=?"
     cur = con.cursor()
 
-    cur.execute(query, (cat, ))
+    cur.execute(query, (cat,))
+    created_by_user = cur.fetchall()
+
+    if created_by_user[0][0]:
+        # Grab category data at the passed category
+        query = """SELECT id, name, description, timestamp, user_created FROM category WHERE id = ?"""
+        cur = con.cursor()
+        cur.execute(query, (cat,))
+        category_data = cur.fetchall()
+
+        # Find words that meet the requirements (word ids in the word_tag table with the category_id of <cat>
+        query = "SELECT word_id FROM word_tag WHERE category_id=?"
+        cur = con.cursor()
+
+        cur.execute(query, (cat,))
+        found_words = cur.fetchall()
+
+        words_data = []
+
+        # Access word table by referencing the found words from the word_tag table, append into new list
+        for w in found_words:
+            cur = con.cursor()
+            cur.execute("SELECT id, name, description, author, timestamp FROM word WHERE id=?", w)
+            words_data.append(cur.fetchall())
+
+        # Print words for debug + close connection to database
+        print(words_data)
+        con.close()
+
+        return render_template('remove_category.html', category_list=find_categories(), logged_in=is_logged_in(),
+                               user_account=my_account(), teacher=is_teacher(), word_list=words_data,
+                               passed_cat=category_data)
+    else:
+        con.close()
+        return redirect('/?error=No+permission')
+
+    return redirect('/')
+
+
+@app.route('/confirm_remove_category/<cat>')
+def render_confirm_category_remove_page(cat):
+    if not is_logged_in():
+        return redirect('/?error=Not+logged+in')
+
+    if not is_teacher():
+        return redirect('/?error=No+permission')
+
+    con = create_connection(DB_NAME)
+
+    query = "SELECT user_created FROM category WHERE id=?"
+    cur = con.cursor()
+
+    cur.execute(query, (cat,))
     created_by_user = cur.fetchall()
 
     if created_by_user[0][0]:
@@ -306,6 +375,7 @@ def render_category_remove_page(cat):
         con.commit()
         con.close()
     else:
+        con.close()
         return redirect('/?error=No+permission')
 
     return redirect('/')
@@ -347,11 +417,11 @@ def render_add_word_page():
             if find_word[0].strip().lower() == word_name.strip().lower():
                 return redirect('/?error=Word+already+exists+in+database')
 
-        query = "INSERT INTO word(id,name,description,author,timestamp,maori,level) VALUES (NULL,?,?,?,?,?,?)"
+        query = "INSERT INTO word(id,name,description,author,timestamp,maori,level,image) VALUES (NULL,?,?,?,?,?,?,?)"
         cur = con.cursor()
 
         # Catch insertion errors
-        cur.execute(query, (word_name, word_desc, userid, timestamp, word_maori, word_level))
+        cur.execute(query, (word_name, word_desc, userid, timestamp, word_maori, word_level, "noimage.png"))
 
         con.commit()
 
@@ -404,8 +474,9 @@ def render_add_category_page():
         con.commit()
 
         cat_data = cur.fetchall()
-        c_id = len(cat_data) + 1
+        # c_id = len(cat_data) + 1
 
+        # Search for category in list of categories
         for find_cat in cat_data:
             if find_cat[0].strip().lower() == cat_name.strip().lower():
                 return redirect('/?error=Category+already+exists+in+database')
