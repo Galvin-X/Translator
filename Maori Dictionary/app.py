@@ -154,8 +154,19 @@ def account(user):
     if current_user is False:
         return redirect('/?error=Account+unavailable')
 
+    con = create_connection(DB_NAME)
+    query = "SELECT * FROM word WHERE author=? ORDER BY timestamp DESC LIMIT 10 "
+
+    cur = con.cursor()
+    cur.execute(query, (user,))
+
+    queried_words = cur.fetchall()
+
+    print(queried_words)
+
     return render_template('account.html', category_list=find_categories(), logged_in=is_logged_in(),
-                           user_account=my_account(), user_data=current_user, teacher=is_teacher())
+                           user_account=my_account(), contribution_list=queried_words,
+                           user_data=current_user, teacher=is_teacher())
 
 
 @app.route('/logout')
@@ -220,7 +231,13 @@ def render_category_page(cat):
     query = """SELECT id, name, description, timestamp, user_created FROM category WHERE id = ?"""
     cur = con.cursor()
     cur.execute(query, (cat,))
+
     category_data = cur.fetchall()
+
+    print(category_data)
+
+    if not category_data:
+        return redirect('/?error=No+such+category')
 
     # print(category_data)
 
@@ -235,7 +252,7 @@ def render_category_page(cat):
     # Access word table by referencing the found words from the word_tag table, append into new list
     for w in found_words:
         cur = con.cursor()
-        cur.execute("""SELECT id, name, description, author, timestamp FROM word WHERE id = ?""", w)
+        cur.execute("""SELECT id, name, maori, description, author, timestamp FROM word WHERE id = ?""", w)
         words_data.append(cur.fetchall())
 
     # Print words for debug + close connection to database
@@ -247,24 +264,58 @@ def render_category_page(cat):
                            user_account=my_account(), teacher=is_teacher())
 
 
-@app.route('/word/<word>')
+@app.route('/word/<word>', methods=["POST", "GET"])
 def render_word_page(word):
-    con = create_connection(DB_NAME)
 
-    # Grab category data at the passed category
-    query = "SELECT * FROM word WHERE id=?"
-    cur = con.cursor()
-    cur.execute(query, (word,))
-    word_data = cur.fetchall()
+    if request.method == "POST":
+        if not is_logged_in():
+            return redirect('/?error=Not+logged+in')
 
-    user_id = word_data[0][3]
+        if not is_teacher():
+            return redirect('/?error=No+permission')
 
-    query = "SELECT * FROM user WHERE id=?"
-    cur = con.cursor()
-    cur.execute(query, (user_id, ))
-    users = cur.fetchall()
+        if request.method == "POST":
+            word_name = request.form['word_name'].strip()
+            word_maori = request.form['word_maori'].strip()
+            word_desc = request.form['word_desc'].strip()
 
-    con.close()
+            word_level = max(0, min(10, int(request.form['word_level'])))
+
+            userid = session['userid']
+            timestamp = datetime.now()
+
+            con = create_connection(DB_NAME)
+
+            query = "UPDATE word SET name=?,description=?,author=?,timestamp=?,maori=?,level=? WHERE id=?"
+            cur = con.cursor()
+
+            # Catch insertion errors
+            cur.execute(query, (word_name, word_desc, userid, timestamp, word_maori, word_level, word))
+
+            con.commit()
+            con.close()
+
+            return redirect('/word/' + str(word))
+    else:
+        con = create_connection(DB_NAME)
+
+        # Grab category data at the passed category
+        query = "SELECT * FROM word WHERE id=?"
+        cur = con.cursor()
+        cur.execute(query, (word,))
+        word_data = cur.fetchall()
+
+        if not word_data:
+            return redirect('/?error=No+such+word')
+
+        user_id = word_data[0][3]
+
+        query = "SELECT * FROM user WHERE id=?"
+        cur = con.cursor()
+        cur.execute(query, (user_id, ))
+        users = cur.fetchall()
+
+        con.close()
 
     return render_template('word.html', passed_word=word_data, category_list=find_categories(),
                            logged_in=is_logged_in(), user_account=my_account(), teacher=is_teacher(), user_data=users)
@@ -314,6 +365,9 @@ def render_category_remove_page(cat):
     cur.execute(query, (cat,))
     created_by_user = cur.fetchall()
 
+    if not created_by_user:
+        return redirect('/?error=No+such+category')
+
     if created_by_user[0][0]:
         # Grab category data at the passed category
         query = """SELECT id, name, description, timestamp, user_created FROM category WHERE id = ?"""
@@ -333,7 +387,7 @@ def render_category_remove_page(cat):
         # Access word table by referencing the found words from the word_tag table, append into new list
         for w in found_words:
             cur = con.cursor()
-            cur.execute("SELECT id, name, description, author, timestamp FROM word WHERE id=?", w)
+            cur.execute("SELECT id, name, maori, description, author, timestamp FROM word WHERE id=?", w)
             words_data.append(cur.fetchall())
 
         # Print words for debug + close connection to database
@@ -365,6 +419,9 @@ def render_confirm_category_remove_page(cat):
 
     cur.execute(query, (cat,))
     created_by_user = cur.fetchall()
+
+    if not created_by_user:
+        return redirect('/?error=No+such+category')
 
     if created_by_user[0][0]:
         query = "DELETE FROM category WHERE id=?"

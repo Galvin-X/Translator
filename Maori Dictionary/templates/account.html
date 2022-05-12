@@ -6,6 +6,15 @@
 
 {% block main %}
     <h2>User Account - {{ user_data[1] }}</h2>
-    <h3>This page is a community-run Māori Dictionary. Permitted users can edit, add and remove words which will be
-        displayed in various categories.</h3>
+    <h3>This is the user page of {{ user_data[1] }}. Below is a list of their recent contributions and edits.</h3>
+
+    {% for word in contribution_list %}
+
+    <div class="category-box">
+        <h4><a href="/word/{{ word[0] }}">• {{ word[5] }} ({{ word[1] }}) was created or modified by {{ user_data[1] }}
+        </a></h4>
+    </div>
+
+    {% endfor %}
+
 {% endblock %}
