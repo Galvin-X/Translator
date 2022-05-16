@@ -17,7 +17,7 @@
 
     <h3>Level: {{ passed_word[0][7] }}</h3>
     <h3>Date Added: {{ passed_word[0][4] }}</h3>
-    <h3>Added By: {{ user_data[0][1] }}</h3>
+    <h3>Edited By: {{ user_data[0][1] }}</h3>
 
 
     <img src="/static/images/{{ passed_word[0][6] }}">
@@ -27,23 +27,30 @@
 <form class="dataForm" method="post">
     <div class="formGroup">
         <div class="formLabel">English:</div>
-        <div class="formElement"><input id="word_name" name="word_name" type="text" required></div>
+        <div class="formElement">
+            <input id="word_name" name="word_name" type="text" value="{{ passed_word[0][1] }}" required>
+        </div>
     </div>
 
     <div class="formGroup">
         <div class="formLabel">Maōri:</div>
-        <div class="formElement"><input id="word_maori" name="word_maori" type="text" required></div>
+        <div class="formElement">
+            <input id="word_maori" name="word_maori" type="text" value="{{ passed_word[0][5] }}" required>
+        </div>
     </div>
 
     <div class="formGroup">
         <div class="formLabel">Description:</div>
-        <div class="formElement"><textarea id="word_desc" name="word_desc"  type="text" rows="6" required>
-        </textarea></div>
+        <div class="formElement">
+            <textarea id="word_desc" name="word_desc"  type="text" rows="6" required>{{ passed_word[0][2] }}</textarea>
+        </div>
     </div>
 
     <div class="formGroup">
         <div class="formLabel">Level:</div>
-        <div class="formElement"><input id="word_level" name="word_level" type="number" required></div>
+        <div class="formElement">
+            <input id="word_level" name="word_level" type="number" value="{{ passed_word[0][7] }}" required>
+        </div>
     </div>
 
     <div class="buttonGroup">
