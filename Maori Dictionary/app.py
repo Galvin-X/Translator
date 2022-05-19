@@ -1,9 +1,12 @@
+# Maori Dictionary code
+# Imports
 from flask import Flask, render_template, request, session, redirect
 import sqlite3
 from sqlite3 import Error
 from flask_bcrypt import Bcrypt
 from datetime import datetime
 
+# Define database accessors
 DB_NAME = "dictionary.db"
 
 app = Flask(__name__)
@@ -11,6 +14,7 @@ bcrypt = Bcrypt(app)
 app.secret_key = "@*#(!HbJ@#LKJyl,!@#*aSDd**)sHdgsC^ExA&^*@#L!@#uiyoy:EWzA)R(_IAO:SD<?xiVqH{}#@$)_#(@)_IqI!"
 
 
+# Functions
 def create_connection(db_file):
     """
     Creates a connection to the database.
@@ -111,6 +115,8 @@ def render_homepage():
 @app.route('/about')
 def render_about_page():
     # Show about page
+    if request.method == 'POST':
+        pass
     return render_template('about.html', category_list=find_categories(), logged_in=is_logged_in(),
                            user_account=my_account(), teacher=is_teacher())
 
@@ -622,7 +628,7 @@ def render_add_category_page():
     # Only run this code if the form is being posted
     if request.method == "POST":
         # Get data from the form
-        cat_name = request.form['word_name'].strip()
+        cat_name = request.form['word_name'].strip().title()
         cat_desc = request.form['word_desc'].strip()
 
         userid = session['userid']
