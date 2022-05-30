@@ -5,58 +5,63 @@
 {% block heading %}Maōri - English Dictionary{% endblock %}
 
 {% block main %}
+    <!--Display word information-->
+    <div class="category-description">
+        <h2>{{ passed_word[0][5] }} - {{ passed_word[0][1] }}
 
-<div class="category-description">
-    <h2>{{ passed_word[0][5] }} - {{ passed_word[0][1] }}
+            {% if logged_in and teacher %}
+                <a href="/remove_word/{{ passed_word[0][0] }}"> - Delete this word?</a></h2>
+            {% endif %}
 
+        <h3>{{ passed_word[0][2] }}</h3>
+
+        <h3>Level: {{ passed_word[0][7] }}</h3>
+        <h3>Date Added: {{ passed_word[0][4] }}</h3>
+        <h3>Edited By: <a href="/account/{{ user_data[0][0] }}">{{ user_data[0][1] }}</a></h3>
+
+
+        <img src="/static/images/{{ passed_word[0][6] }}">
+    </div>
+
+    <!--Display edit word form-->
     {% if logged_in and teacher %}
-        <a href="/remove_word/{{ passed_word[0][0] }}"> - Delete this word?</a></h2>
+        <form class="dataForm" method="post">
+            <div class="formGroup">
+                <div class="formLabel">English:</div>
+                <div class="formElement">
+                    <input id="word_name" name="word_name" type="text" value="{{ passed_word[0][1] }}" required>
+                </div>
+            </div>
+
+            <div class="formGroup">
+                <div class="formLabel">Maōri:</div>
+                <div class="formElement">
+                    <input id="word_maori" name="word_maori" type="text" value="{{ passed_word[0][5] }}" required>
+                </div>
+            </div>
+
+            <div class="formGroup">
+                <div class="formLabel">Description:</div>
+                <div class="formElement">
+                    <textarea id="word_desc" name="word_desc" type="text" rows="6"
+                              required>{{ passed_word[0][2] }}</textarea>
+                </div>
+            </div>
+
+            <div class="formGroup">
+                <div class="formLabel">Year Level:</div>
+                <br>
+                {% for val in range(1, 11) %}
+                    <input type="radio" class="inline-button" id="level{{ val }}" name="word_level"
+                           value="{{ val }}" {% if passed_word[0][7] == val %}checked="checked"{% endif %} required>
+                    <label for="level{{ val }}" name="button_label">{{ val }}</label>
+                {% endfor %}
+            </div>
+
+            <div class="buttonGroup">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
     {% endif %}
-
-    <h3>{{ passed_word[0][2] }}</h3>
-
-    <h3>Level: {{ passed_word[0][7] }}</h3>
-    <h3>Date Added: {{ passed_word[0][4] }}</h3>
-    <h3>Edited By: {{ user_data[0][1] }}</h3>
-
-
-    <img src="/static/images/{{ passed_word[0][6] }}">
-</div>
-
-{% if logged_in and teacher %}
-<form class="dataForm" method="post">
-    <div class="formGroup">
-        <div class="formLabel">English:</div>
-        <div class="formElement">
-            <input id="word_name" name="word_name" type="text" value="{{ passed_word[0][1] }}" required>
-        </div>
-    </div>
-
-    <div class="formGroup">
-        <div class="formLabel">Maōri:</div>
-        <div class="formElement">
-            <input id="word_maori" name="word_maori" type="text" value="{{ passed_word[0][5] }}" required>
-        </div>
-    </div>
-
-    <div class="formGroup">
-        <div class="formLabel">Description:</div>
-        <div class="formElement">
-            <textarea id="word_desc" name="word_desc"  type="text" rows="6" required>{{ passed_word[0][2] }}</textarea>
-        </div>
-    </div>
-
-    <div class="formGroup">
-        <div class="formLabel">Level:</div>
-        <div class="formElement">
-            <input id="word_level" name="word_level" type="number" value="{{ passed_word[0][7] }}" required>
-        </div>
-    </div>
-
-    <div class="buttonGroup">
-        <input type="submit" value="Submit">
-    </div>
-</form>
-{% endif %}
 
 {% endblock %}

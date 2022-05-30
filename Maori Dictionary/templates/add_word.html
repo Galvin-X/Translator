@@ -5,39 +5,47 @@
 {% block heading %}Maōri - English Dictionary{% endblock %}
 
 {% block main %}
-<form class="dataForm" method="post">
-    <div class="formGroup">
-        <div class="formLabel">English:</div>
-        <div class="formElement"><input id="word_name" name="word_name" type="text" required></div>
-    </div>
+    <!--Add word form-->
+    <form class="dataForm" method="post">
+        <div class="formGroup">
+            <div class="formLabel">English:</div>
+            <div class="formElement"><input id="word_name" name="word_name" type="text" required></div>
+        </div>
 
-    <div class="formGroup">
-        <div class="formLabel">Maōri:</div>
-        <div class="formElement"><input id="word_maori" name="word_maori" type="text" required></div>
-    </div>
+        <div class="formGroup">
+            <div class="formLabel">Maōri:</div>
+            <div class="formElement"><input id="word_maori" name="word_maori" type="text" required></div>
+        </div>
 
-    <div class="formGroup">
-        <label class="formLabel" required>Choose a category:</label>
+        <div class="formGroup">
+            <label class="formLabel" required>Choose a category:</label>
             <select name="category" id="category">
                 {% for category in category_list %}
-                    <option class="formElement" value={{ category[0] }} >{{ category[1] }}</option>
+                    <option class="formElement" value={{ category[0] }}>{{ category[1] }}</option>
                 {% endfor %}
             </select>
-        <br><br>
-    </div>
+            <br><br>
+        </div>
 
-    <div class="formGroup">
-        <div class="formLabel">Description:</div>
-        <div class="formElement"><textarea id="word_desc" name="word_desc"  type="text" rows="6" required></textarea></div>
-    </div>
+        <div class="formGroup">
+            <div class="formLabel">Description:</div>
+            <div class="formElement"><textarea id="word_desc" name="word_desc" type="text" rows="6" required></textarea>
+            </div>
+        </div>
 
-    <div class="formGroup">
-        <div class="formLabel">Level:</div>
-        <div class="formElement"><input id="word_level" name="word_level" type="number" required></div>
-    </div>
+        <div class="formGroup">
+            <div class="formLabel">Year Level:</div>
+            <br>
+            {% for val in range(1, 11) %}
+                <input type="radio" class="inline-button" id="level{{ val }}" name="word_level" value="{{ val }}"
+                       required>
+                <label for="level{{ val }}" name="button_label">{{ val }}</label>
+            {% endfor %}
+        </div>
 
-    <div class="buttonGroup">
-        <input type="submit" value="Submit">
-    </div>
-</form>
+
+        <div class="buttonGroup">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
 {% endblock %}

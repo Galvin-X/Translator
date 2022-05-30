@@ -5,19 +5,20 @@
 {% block heading %}Maōri - English Dictionary{% endblock %}
 
 {% block main %}
-<form class="dataForm" method="post">
-    <div class="formGroup">
-        <div class="formLabel">Email:</div>
-        <div class="formElement"><input id="email" name="email"   type="email" required></div>
-    </div>
+    <!--Login form-->
+    <form class="dataForm" method="post">
+        <div class="formGroup">
+            <div class="formLabel">Email:</div>
+            <div class="formElement"><input id="email" name="email" type="email" required></div>
+        </div>
 
-    <div class="formGroup">
-        <div class="formLabel">Password:</div>
-        <div class="formElement"><input id="pass1" name="pass1"   type="password" required></div>
-    </div>
+        <div class="formGroup">
+            <div class="formLabel">Password:</div>
+            <div class="formElement"><input id="pass1" name="pass1" type="password" required></div>
+        </div>
 
-    <div class="buttonGroup">
-        <input type="submit" value="Submit"> or <a href="/signup".>sign up</a>
-    </div>
-</form>
+        <div class="buttonGroup">
+            <input type="submit" value="Submit"> or <a href="/signup" .>sign up</a>
+        </div>
+    </form>
 {% endblock %}

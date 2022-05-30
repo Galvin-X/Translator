@@ -1,64 +1,70 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Suez+One&display=swap" rel="stylesheet">
-	<title>{% block title %}{% endblock %}</title>
-	<meta name="Description" content="Author: M Gascoigne, Content: A dictionary to convert maori words to english.">
+    <!--Metadata and imports-->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Suez+One&display=swap" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="Description" content="Author: M Gascoigne, Content: A dictionary to convert Maōri words to english.">
 </head>
 
 <body>
-	<div id="container">
+<div id="container">
+    <!--Header-->
+    <header>
+        <h1>
+            {% block heading %}{% endblock %}
+        </h1>
+    </header>
 
-		<header>
-			<h1>
-                {% block heading %}{% endblock %}
-            </h1>
-		</header>
-
-		<nav>
-            <div class="category-box">
-                <h3>Navigate</h3>
-                <h4><a href="\">• Home</a></h4>
-                <h4><a href="\about">• About</a></h4>
-                <h4><a href="\contributions">• Contributions</a></h4>
-                {% if not logged_in %}<h4><a href="\login">• Log in</a></h4>
-                {% else %}
-                    <h4><a href="\account\{{ user_account }}">• Account</a></h4>
-                    <h4><a href="\logout">• Log out</a></h4>
-                {% endif %}
-                <h3>Categories
-                    {% if teacher %}
+    <!--Navigation sidebar-->
+    <nav>
+        <div class="category-box">
+            <!--Main links-->
+            <h3>Navigate</h3>
+            <h4><a href="\">• Home</a></h4>
+            <h4><a href="\about">• About</a></h4>
+            <h4><a href="\contributions">• Contributions</a></h4>
+            {% if not logged_in %}<h4><a href="\login">• Log in</a></h4>
+            {% else %}
+                <h4><a href="\account\{{ user_account }}">• Account</a></h4>
+                <h4><a href="\logout">• Log out</a></h4>
+            {% endif %}
+            <h3>Categories
+                {% if teacher %}
                     <a href="/add_category">+</a>
-                    {% endif %}
-                </h3>
-            </div>
+                {% endif %}
+            </h3>
+        </div>
 
-            {% for category in category_list %}
+        <!--Category links-->
+        {% for category in category_list %}
 
             <div class="category-box">
                 <h4><a href="/category/{{ category[0] }}">• {{ category[1] }}</a></h4>
             </div>
 
-            {% endfor %}
-		</nav>
+        {% endfor %}
+    </nav>
 
 
-		<!--
-		=====================================================
-		== Content row of the template.                 ==
-		=====================================================
-		-->
+    <!--
+    =====================================================
+    == Content row of the template.                 ==
+    =====================================================
+    -->
 
-		<main>
-            {% block main%}{% endblock %}
-        </main>
+    <!--Main page content-->
+    <main>
+        {% block main %}{% endblock %}
+    </main>
 
-		<footer class="footer">
-            <a href="https://github.com/Galvin-X/Translator" target="_blank">&copy; Martyn Gascoigne 2022</a>
-		</footer>
+    <!--Footer-->
+    <footer class="footer">
+        <a href="https://github.com/Galvin-X/Translator" target="_blank">&copy; Martyn Gascoigne 2022</a>
+    </footer>
 
-	</div>
+</div>
 </body>
 </html>

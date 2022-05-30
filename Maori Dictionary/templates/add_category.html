@@ -5,19 +5,21 @@
 {% block heading %}Maōri - English Dictionary{% endblock %}
 
 {% block main %}
-<form class="dataForm" method="post">
-    <div class="formGroup">
-        <div class="formLabel">English:</div>
-        <div class="formElement"><input id="word_name" name="word_name" type="text" required></div>
-    </div>
+    <!--Add category form-->
+    <form class="dataForm" method="post">
+        <div class="formGroup">
+            <div class="formLabel">English:</div>
+            <div class="formElement"><input id="word_name" name="word_name" type="text" required></div>
+        </div>
 
-    <div class="formGroup">
-        <div class="formLabel">Description:</div>
-        <div class="formElement"><textarea id="word_desc" name="word_desc"  type="text" rows="6" required></textarea></div>
-    </div>
+        <div class="formGroup">
+            <div class="formLabel">Description:</div>
+            <div class="formElement"><textarea id="word_desc" name="word_desc" type="text" rows="6" required></textarea>
+            </div>
+        </div>
 
-    <div class="buttonGroup">
-        <input type="submit" value="Submit">
-    </div>
-</form>
+        <div class="buttonGroup">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
 {% endblock %}

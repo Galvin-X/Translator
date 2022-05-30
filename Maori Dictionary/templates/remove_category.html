@@ -5,34 +5,37 @@
 {% block heading %}Maōri - English Dictionary{% endblock %}
 
 {% block main %}
-
-<div class="category-description">
-    <h2>{{ passed_cat[0][1] }}</h2>
-    <h3>{{ passed_cat[0][2] }}</h3>
-
-
-    {% if logged_in and teacher %}
+    <!--Display data of category being removed-->
     <div class="category-description">
-    <br>
+        <h2>{{ passed_cat[0][1] }}</h2>
+        <h3>{{ passed_cat[0][2] }}</h3>
 
-    <h4>Are you sure you want to remove this category? - <a href="/confirm_remove_category/{{ passed_cat[0][0] }}">Yes</a> or
-        <a href="/category/{{ passed_cat[0][0] }}">No</a></h4>
 
-    <br>
+        {% if logged_in and teacher %}
+            <div class="category-description">
+                <br>
+
+                <!--Confirm button-->
+                <h4>Are you sure you want to remove this category? - <a
+                        href="/confirm_remove_category/{{ passed_cat[0][0] }}">Yes</a> or
+                    <a href="/category/{{ passed_cat[0][0] }}">No</a></h4>
+
+                <br>
+            </div>
+        {% endif %}
+
+        {% if word_list|length > 0 %}
+            <h4>Below are a list of words in this category: </h4>
+        {% endif %}
     </div>
-    {% endif %}
 
-    {% if word_list|length > 0 %}
-        <h4>Below are a list of words in this category: </h4>
-    {% endif %}
-</div>
+    <!--Display data of words within category-->
+    {% for word in word_list %}
 
-{% for word in word_list %}
+        <div class="category-box">
+            <h4><a href="/word/{{ word[0][0] }}">• {{ word[0][1] }} ({{ word[0][2] }})</a></h4>
+        </div>
 
-<div class="category-box">
-    <h4><a href="/word/{{ word[0][0] }}">• {{ word[0][1] }} ({{ word[0][2] }})</a></h4>
-</div>
-
-{% endfor %}
+    {% endfor %}
 
 {% endblock %}

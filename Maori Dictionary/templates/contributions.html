@@ -5,15 +5,16 @@
 {% block heading %}Maōri - English Dictionary{% endblock %}
 
 {% block main %}
+    <!--Display recent user contributions / edits-->
     <h2>Recent Contributions</h2>
 
     <h3>Here is a list of the recent contributions:</h3>
 
     {% for word in contribution_list %}
 
-    <div class="category-box">
-        <h4><a href="/word/{{ word[0] }}">• {{ word[5] }} ({{ word[1] }}) was created or modified</a></h4>
-    </div>
+        <div class="category-box">
+            <h4><a href="/word/{{ word[0] }}">• {{ word[5] }} ({{ word[1] }}) was created or modified</a></h4>
+        </div>
 
     {% endfor %}
 

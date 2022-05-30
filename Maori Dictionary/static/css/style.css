@@ -147,6 +147,11 @@ textarea {
     width: 100%;
 }
 
+.formGroup input[type="radio"]{
+    width: 4%;
+    padding: 0;
+}
+
 select {
     width: 70%;
     float: left;

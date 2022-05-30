@@ -1,5 +1,5 @@
 # Maori Dictionary code
-# Imports
+# Import modules
 from flask import Flask, render_template, request, session, redirect
 import sqlite3
 from sqlite3 import Error
@@ -11,7 +11,7 @@ DB_NAME = "dictionary.db"
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-app.secret_key = "@*#(!HbJ@#LKJyl,!@#*aSDd**)sHdgsC^ExA&^*@#L!@#uiyoy:EWzA)R(_IAO:SD<?xiVqH{}#@$)_#(@)_IqI!"
+app.secret_key = "@*#(!HbJ@#LKJyl,!@#*aSDd**)sC^ExA&^*@#L!@#uiyoy:EWzA)R(_IAO:SD<?xiVqH{}#@$)_#(@)_IqI!"
 
 
 # Functions
@@ -37,7 +37,7 @@ def find_categories():
 
     con = create_connection(DB_NAME)
 
-    query = "SELECT id, name, description FROM category"
+    query = "SELECT id, name, description FROM category ORDER BY name"
 
     cur = con.cursor()
     cur.execute(query)
@@ -94,7 +94,7 @@ def is_logged_in():
 
 def is_teacher():
     """
-    Returns whether the logged in user has teacher permissions or not.
+    Returns whether the logged-in user has teacher permissions or not.
     """
 
     if not is_logged_in() or (session.get('teacher') is None or 0):
@@ -201,7 +201,7 @@ def account(user):
     # Display account page of passed user
     current_user = fetch_user_data(user)
 
-    # Account doesnt exist - catch error
+    # Account doesn't exist - catch error
     if current_user is False:
         return redirect('/?error=Account+unavailable')
 
@@ -343,6 +343,8 @@ def render_word_page(word):
     cur.execute(query, (word,))
     word_data = cur.fetchall()
 
+    users = []
+
     # Run this code if form is being submitted
     if request.method == "POST":
         # Ensure user has appropriate permission
@@ -390,7 +392,7 @@ def render_word_page(word):
         # Get the id of the user who edited / created this word
         user_id = word_data[0][3]
 
-        # Get all of the data
+        # Get all the data
         query = "SELECT * FROM user WHERE id=?"
         cur = con.cursor()
         cur.execute(query, (user_id,))
@@ -415,17 +417,25 @@ def render_word_remove_page(word):
     # Create connection to database
     con = create_connection(DB_NAME)
 
-    # Delete word from the word table at <word>
-    query = "DELETE FROM word WHERE id=?"
+    # Find word
+    query = "SELECT * FROM word WHERE id=?"
+    cur = con.cursor()
+    cur.execute(query, (word,))
+    queried_data = cur.fetchall()
+
+    print(queried_data)
+
+    if len(queried_data) <= 0:
+        return redirect('/?error=No+such+word')
+
+    # Delete word tag
+    query = "DELETE FROM word_tag WHERE word_id=?"
     cur = con.cursor()
 
     cur.execute(query, (word,))
 
-    # Commit word deletion
-    con.commit()
-
-    # Delete word tag
-    query = "DELETE FROM word_tag WHERE word_id=?"
+    # Delete word from the word table at <word>
+    query = "DELETE FROM word WHERE id=?"
     cur = con.cursor()
 
     cur.execute(query, (word,))
@@ -475,7 +485,7 @@ def render_category_remove_page(cat):
         cur.execute(query, (cat,))
         found_words = cur.fetchall()
 
-        # Create dump table to insert all of the word data into
+        # Create dump table to insert all the word data into
         words_data = []
 
         # Access word table by referencing the found words from the word_tag table, append into new list
@@ -497,8 +507,6 @@ def render_category_remove_page(cat):
         # User has no permission - close connection and redirect
         con.close()
         return redirect('/?error=No+permission')
-
-    return redirect('/')
 
 
 @app.route('/confirm_remove_category/<cat>')
@@ -631,7 +639,6 @@ def render_add_category_page():
         cat_name = request.form['word_name'].strip().title()
         cat_desc = request.form['word_desc'].strip()
 
-        userid = session['userid']
         timestamp = datetime.now()
 
         # Connect to database

@@ -1425,5 +1425,17 @@
       <Position>2</Position>
       <DataType>integer|0s</DataType>
     </column>
+    <foreign-key id="510" parent="168">
+      <ColNames>word_id</ColNames>
+      <RefTableName>word</RefTableName>
+      <RefKeyName>word_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="511" parent="168">
+      <ColNames>category_id</ColNames>
+      <RefTableName>category</RefTableName>
+      <RefKeyName>category_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>

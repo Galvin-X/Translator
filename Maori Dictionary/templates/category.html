@@ -5,34 +5,35 @@
 {% block heading %}Maōri - English Dictionary{% endblock %}
 
 {% block main %}
-
-<div class="category-description">
-    <h2>{{ passed_cat[0][1] }}
-
-    {% if passed_cat[0][4] and logged_in and teacher %}
-        <a href="/remove_category/{{ passed_cat[0][0] }}"> - Delete this category?</a></h2>
-    {% endif %}
-
-    <h3>{{ passed_cat[0][2] }}</h3>
-
-    {% if word_list|length > 0 %}
-        <h4>Below are a list of words in this category: </h4>
-    {% endif %}
-</div>
-
-{% for word in word_list %}
-
-<div class="category-box">
-    <h4><a href="/word/{{ word[0][0] }}">• {{ word[0][1] }} ({{ word[0][2] }})</a></h4>
-</div>
-
-{% endfor %}
-
-{% if teacher %}
+    <!--Display category information-->
     <div class="category-description">
-    <br>
-    <h4><a href="/add_word">Add a word?</a></h4>
+        <h2>{{ passed_cat[0][1] }}
+
+            {% if passed_cat[0][4] and logged_in and teacher %}
+                <a href="/remove_category/{{ passed_cat[0][0] }}"> - Delete this category?</a></h2>
+            {% endif %}
+
+        <h3>{{ passed_cat[0][2] }}</h3>
+
+        {% if word_list|length > 0 %}
+            <h4>Below are a list of words in this category: </h4>
+        {% endif %}
     </div>
-{% endif %}
+
+    <!--Display words in category-->
+    {% for word in word_list %}
+
+        <div class="category-box">
+            <h4><a href="/word/{{ word[0][0] }}">• {{ word[0][2] }} ({{ word[0][1] }})</a></h4>
+        </div>
+
+    {% endfor %}
+
+    {% if teacher %}
+        <div class="category-description">
+            <br>
+            <h4><a href="/add_word">Add a word?</a></h4>
+        </div>
+    {% endif %}
 
 {% endblock %}
